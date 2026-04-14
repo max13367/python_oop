@@ -13,7 +13,7 @@ def main():
 
     a1 = Account("1111111111", "Max", 1000, "USD", 500)
     a2 = Account("2222222222", "John", 500, "EUR", 1000)
-    a3 = Account("3333333333", "Max", 200, "USD", 300)
+    a3 = Account("3333333333", "Alex", 200, "USD", 300)
 
     print("\n=== Сценарий 1 ===")
     storage.append(a1)
