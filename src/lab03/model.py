@@ -1,5 +1,4 @@
-from base import ClientAccount
-
+from src.lab01.model import ClientAccount
 
 class CreditAccount(ClientAccount):
     def __init__(self, acc_id, holder, balance, currency, credit_limit, interest_rate):

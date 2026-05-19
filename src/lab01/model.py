@@ -1,4 +1,9 @@
-from validate import check_name, check_id, check_money, check_currency
+from src.lab01.validate import (
+    check_name,
+    check_id,
+    check_money,
+    check_currency
+)
 
 
 class ClientAccount:
