@@ -1,0 +1,31 @@
+[
+  {
+    "type": "standard",
+    "acc_id": "1000000001",
+    "holder": "Максим Орлов",
+    "balance": 25000.0,
+    "currency": "RUB",
+    "credit_limit": 0.0,
+    "is_active": true
+  },
+  {
+    "type": "savings",
+    "acc_id": "1000000002",
+    "holder": "Анна Смирнова",
+    "balance": 80000.0,
+    "currency": "RUB",
+    "credit_limit": 0.0,
+    "is_active": true,
+    "interest_rate": 7.5
+  },
+  {
+    "type": "credit",
+    "acc_id": "1000000003",
+    "holder": "Олег Чернов",
+    "balance": -5000.0,
+    "currency": "RUB",
+    "credit_limit": 50000.0,
+    "is_active": true,
+    "interest_rate": 20.0
+  }
+]

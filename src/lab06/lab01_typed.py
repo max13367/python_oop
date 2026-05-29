@@ -1,16 +1,27 @@
-from lab01.validate import (
+"""
+Классы из ЛР-1 с добавленными аннотациями типов
+и методами display() / score() для протоколов ЛР-6.
+"""
+
+from src.lab01.validate import (
     check_name,
     check_id,
     check_money,
-    check_currency
+    check_currency,
 )
 
 
 class ClientAccount:
-    bank_title = "MaxBank"
+    bank_title: str = "MaxBank"
 
-    def __init__(self, acc_id: str, holder: str, balance: float,
-                 currency: str, credit_limit: float = 0) -> None:
+    def __init__(
+        self,
+        acc_id: str,
+        holder: str,
+        balance: float,
+        currency: str,
+        credit_limit: float = 0.0,
+    ) -> None:
         check_id(acc_id)
         check_name(holder)
         check_currency(currency)
@@ -26,7 +37,7 @@ class ClientAccount:
         self._credit_limit: float = float(credit_limit)
         self._active: bool = True
 
-    # ── properties ───────────────────────────────────────────
+    # properties
 
     @property
     def holder(self) -> str:
@@ -49,15 +60,7 @@ class ClientAccount:
     def is_active(self) -> bool:
         return self._active
 
-    @property
-    def account_id(self) -> str:
-        return self._id
-
-    @property
-    def account_type(self) -> str:
-        return "standard"
-
-    # ── бизнес-методы ────────────────────────────────────────
+    # бизнес-методы
 
     def add_funds(self, amount: float) -> None:
         self._check_active()
@@ -68,7 +71,7 @@ class ClientAccount:
         self._check_active()
         check_money(amount, "Сумма снятия")
         if self._balance - amount < -self._credit_limit:
-            raise ValueError("Недостаточно средств с учетом кредитного лимита")
+            raise ValueError("Недостаточно средств с учётом кредитного лимита")
         self._balance -= amount
 
     def apply_interest(self, percent: float) -> None:
@@ -79,41 +82,21 @@ class ClientAccount:
     def block_account(self) -> None:
         self._active = False
 
-    # ── сериализация (нужна для ЛР-7 storage.py) ─────────────
+    # методы для протоколов ЛР-6
 
-    def to_dict(self) -> dict:
-        """Преобразовать объект в словарь для сохранения в JSON."""
-        return {
-            "type": self.account_type,
-            "acc_id": self._id,
-            "holder": self._holder,
-            "balance": self._balance,
-            "currency": self._currency,
-            "credit_limit": self._credit_limit,
-            "is_active": self._active,
-        }
+    def display(self) -> str:
+        """Реализует протокол Displayable."""
+        return str(self)
 
-    @classmethod
-    def from_dict(cls, data: dict) -> "ClientAccount":
-        """Создать объект из словаря (загрузка из JSON)."""
-        obj = cls(
-            data["acc_id"],
-            data["holder"],
-            data["balance"],
-            data["currency"],
-            data.get("credit_limit", 0),
-        )
-        if not data.get("is_active", True):
-            obj._active = False
-        return obj
+    def score(self) -> float:
+        """Реализует протокол Scorable — возвращает баланс."""
+        return self._balance
 
-    # ── служебные ────────────────────────────────────────────
+    # служебные
 
     def _check_active(self) -> None:
         if not self._active:
-            raise RuntimeError("Счет заблокирован")
-
-    # ── магические ───────────────────────────────────────────
+            raise RuntimeError("Счёт заблокирован")
 
     def __str__(self) -> str:
         status = "ACTIVE" if self._active else "BLOCKED"
